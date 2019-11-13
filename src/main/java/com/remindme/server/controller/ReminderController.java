@@ -1,39 +1,40 @@
 package com.remindme.server.controller;
 
 import com.remindme.server.entity.Remind;
-import com.remindme.server.repository.RemindRepository;
+import com.remindme.server.service.RemindService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reminder")
+@RequestMapping("/reminders")
 public class ReminderController {
 
     @Autowired
-    private RemindRepository remindRepository;
+    private RemindService service;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     @ResponseBody
-    public Remind getReminder() {
-        List<Remind> list = remindRepository.findAll();
-        return createMockRemind();
+    public List<Remind> getAllReminders() {
+        return service.getAll();
     }
 
-    private Remind createMockRemind() {
-        Remind remind = new Remind();
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Remind getRemind(@PathVariable long id) {
+        return service.getById(id);
+    }
 
-        remind.setId(1);
-        remind.setRemindDate(new Date());
-        remind.setTitle("My first remind");
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+    public Remind saveRemind(@RequestBody Remind remind) {
+        return service.saveOrUpdate(remind);
+    }
 
-        return remind;
-
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public void deleteRemind(@PathVariable long id) {
+        service.remove(id);
     }
 
 }
