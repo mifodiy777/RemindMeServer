@@ -14,7 +14,7 @@
         <hibernate.version>5.0.2.Final</hibernate.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
         <commons-dbcp2.version>2.1.1</commons-dbcp2.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
     </properties>
     <packaging>war</packaging>
 
